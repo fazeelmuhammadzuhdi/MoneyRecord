@@ -1,3 +1,4 @@
+import 'package:d_info/d_info.dart';
 import 'package:money_record_app/config/api.dart';
 import 'package:money_record_app/config/app_request.dart';
 import 'package:money_record_app/config/session.dart';
@@ -22,31 +23,31 @@ class SourceUser {
     return responseBody['success'];
   }
 
-  // static Future<bool> register(
-  //     String name, String email, String password) async {
-  //   String url = '${Api.user}/register.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'name': name,
-  //     'email': email,
-  //     'password': password,
-  //     'created_at': DateTime.now().toIso8601String(),
-  //     'updated_at': DateTime.now().toIso8601String(),
-  //   });
+  static Future<bool> register(
+      String name, String email, String password) async {
+    String url = '${Api.user}/register.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'name': name,
+      'email': email,
+      'password': password,
+      'created_at': DateTime.now().toIso8601String(),
+      'updated_at': DateTime.now().toIso8601String(),
+    });
 
-  //   if (responseBody == null) return false;
+    if (responseBody == null) return false;
 
-  //   if (responseBody['success']) {
-  //     DInfo.dialogSuccess('Berhasil Register');
-  //     DInfo.closeDialog();
-  //   } else {
-  //     if (responseBody['message'] == 'email') {
-  //       DInfo.dialogError('Email sudah terdaftar');
-  //     } else {
-  //       DInfo.dialogError('Gagal Register');
-  //     }
-  //     DInfo.closeDialog();
-  //   }
+    if (responseBody['success']) {
+      DInfo.dialogSuccess('Berhasil Register');
+      DInfo.closeDialog();
+    } else {
+      if (responseBody['message'] == 'email') {
+        DInfo.dialogError('Email sudah terdaftar');
+      } else {
+        DInfo.dialogError('Gagal Register');
+      }
+      DInfo.closeDialog();
+    }
 
-  //   return responseBody['success'];
-  // }
+    return responseBody['success'];
+  }
 }

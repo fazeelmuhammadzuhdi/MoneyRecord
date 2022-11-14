@@ -1,11 +1,9 @@
-import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_record_app/config/app_asset.dart';
 import 'package:money_record_app/config/app_color.dart';
 import 'package:money_record_app/data/source/source_user.dart';
-import 'package:money_record_app/presentation/page/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -21,27 +19,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   register() async {
     if (formKey.currentState!.validate()) {
-      bool success = await SourceUser.login(
+      await SourceUser.register(
+        controllerName.text,
         controllerEmail.text,
         controllerPassword.text,
       );
-      if (success) {
-        DInfo.dialogSuccess('Berhasil Login');
-        DInfo.closeDialog(actionAfterClose: () {
-          Get.off(() => const HomePage());
-        });
-      } else {
-        DInfo.dialogError('Gagal Login');
-        DInfo.closeDialog();
-      }
     }
-    // if (formKey.currentState!.validate()) {
-    //   await SourceUser.register(
-    //     controllerName.text,
-    //     controllerEmail.text,
-    //     controllerPassword.text,
-    //   );
-    // }
   }
 
   @override
