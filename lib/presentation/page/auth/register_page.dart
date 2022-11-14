@@ -5,21 +5,21 @@ import 'package:get/get.dart';
 import 'package:money_record_app/config/app_asset.dart';
 import 'package:money_record_app/config/app_color.dart';
 import 'package:money_record_app/data/source/source_user.dart';
-import 'package:money_record_app/presentation/page/auth/register_page.dart';
 import 'package:money_record_app/presentation/page/home_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final controllerName = TextEditingController();
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  login() async {
+  register() async {
     if (formKey.currentState!.validate()) {
       bool success = await SourceUser.login(
         controllerEmail.text,
@@ -35,18 +35,25 @@ class _LoginPageState extends State<LoginPage> {
         DInfo.closeDialog();
       }
     }
+    // if (formKey.currentState!.validate()) {
+    //   await SourceUser.register(
+    //     controllerName.text,
+    //     controllerEmail.text,
+    //     controllerPassword.text,
+    //   );
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.bg.withOpacity(1),
+      backgroundColor: AppColor.bg,
       body: LayoutBuilder(
-        builder: (context, constrainst) {
+        builder: (context, constraints) {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: constrainst.maxHeight,
+                minHeight: constraints.maxHeight,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,9 +68,9 @@ class _LoginPageState extends State<LoginPage> {
                           Image.asset(AppAsset.logo),
                           DView.spaceHeight(40),
                           TextFormField(
-                            controller: controllerEmail,
+                            controller: controllerName,
                             validator: (value) =>
-                                value == '' ? 'Jangan Kosong' : null,
+                                value == '' ? 'Jangan kosong' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             style: const TextStyle(color: Colors.white),
@@ -71,13 +78,37 @@ class _LoginPageState extends State<LoginPage> {
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide.none),
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: 'Name',
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 16,
+                              ),
+                            ),
+                          ),
+                          DView.spaceHeight(),
+                          TextFormField(
+                            controller: controllerEmail,
+                            validator: (value) =>
+                                value == '' ? 'Jangan kosong' : null,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              fillColor: AppColor.primary.withOpacity(0.5),
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
                               hintText: 'Email',
                               isDense: true,
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 20,
-                                vertical: 18,
+                                vertical: 16,
                               ),
                             ),
                           ),
@@ -85,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             controller: controllerPassword,
                             validator: (value) =>
-                                value == '' ? 'Jangan Kosong' : null,
+                                value == '' ? 'Jangan kosong' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             obscureText: true,
@@ -94,30 +125,32 @@ class _LoginPageState extends State<LoginPage> {
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide.none),
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
                               hintText: 'Password',
                               isDense: true,
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 20,
-                                vertical: 18,
+                                vertical: 16,
                               ),
                             ),
                           ),
-                          DView.spaceHeight(24),
+                          DView.spaceHeight(30),
                           Material(
                             color: AppColor.primary,
                             borderRadius: BorderRadius.circular(30),
                             child: InkWell(
-                              onTap: () => login(),
+                              onTap: () => register(),
                               borderRadius: BorderRadius.circular(30),
                               child: const Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 16),
                                 child: Text(
-                                  'LOGIN',
+                                  'REGISTER',
                                   style: TextStyle(
                                     color: Colors.white,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
@@ -133,24 +166,27 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Belum Punya Akun ? ",
-                          style: TextStyle(fontSize: 16),
+                          'Sudah punya akun? ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => const RegisterPage());
+                            Get.back();
                           },
                           child: const Text(
-                            "Register",
+                            'Login',
                             style: TextStyle(
-                                color: AppColor.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                              color: AppColor.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
