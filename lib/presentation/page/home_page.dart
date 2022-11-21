@@ -251,23 +251,38 @@ class _HomePageState extends State<HomePage> {
           height: MediaQuery.of(context).size.width * 0.5,
           child: Stack(
             children: [
-              DChartPie(
-                data: [
-                  {'domain': 'Flutter', 'measure': 28},
-                  {'domain': 'React Native', 'measure': 27},
-                ],
-                fillColor: (pieData, index) => Colors.purple,
-                donutWidth: 30,
-                labelColor: Colors.white,
-              ),
+              Obx(() {
+                return DChartPie(
+                  data: [
+                    {'domain': 'income', 'measure': cHome.monthIncome},
+                    {'domain': 'outcome', 'measure': cHome.monthOutcome},
+                    if (cHome.monthIncome == 0 && cHome.monthOutcome == 0)
+                      {'domain': 'nol', 'measure': 1},
+                  ],
+                  fillColor: (pieData, index) {
+                    switch (pieData['domain']) {
+                      case 'income':
+                        return AppColor.primary;
+                      case 'outcome':
+                        return AppColor.chart;
+                      default:
+                        return AppColor.bg.withOpacity(0.5);
+                    }
+                  },
+                  donutWidth: 20,
+                  labelColor: Colors.transparent,
+                  showLabelLine: false,
+                );
+              }),
               Center(
-                child: Text(
-                  '60%',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: AppColor.primary),
-                ),
+                child: Obx(() {
+                  return Text(
+                    '${cHome.percentIncome}%',
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: AppColor.primary,
+                        ),
+                  );
+                }),
               ),
             ],
           ),
@@ -283,7 +298,7 @@ class _HomePageState extends State<HomePage> {
                   color: AppColor.primary,
                 ),
                 DView.spaceWidth(8),
-                const Text('Pemasukan')
+                const Text('Pemasukan'),
               ],
             ),
             DView.spaceHeight(8),
@@ -295,23 +310,25 @@ class _HomePageState extends State<HomePage> {
                   color: AppColor.chart,
                 ),
                 DView.spaceWidth(8),
-                const Text('Pengeluaran')
+                const Text('Pengeluaran'),
               ],
             ),
-            DView.spaceHeight(8),
-            Text('Pemasukan'),
-            Text('Lebih Besar 20%'),
-            Text('Dari Pengeluaran'),
+            DView.spaceHeight(20),
+            Obx(() {
+              return Text(cHome.monthPercent);
+            }),
             DView.spaceHeight(10),
-            Text('Atau Setara :'),
-            Text(
-              'Rp 20.000,00',
-              style: TextStyle(
-                color: AppColor.primary,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const Text('Atau setara:'),
+            Obx(() {
+              return Text(
+                AppFormat.currency(cHome.differentMonth.toString()),
+                style: const TextStyle(
+                  color: AppColor.primary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            }),
           ],
         ),
       ],
@@ -321,27 +338,27 @@ class _HomePageState extends State<HomePage> {
   AspectRatio weekly() {
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: DChartBar(
-        data: [
-          {
-            'id': 'Bar',
-            'data': [
-              {'domain': '2020', 'measure': 3},
-              {'domain': '2021', 'measure': 4},
-              {'domain': '2022', 'measure': 6},
-              {'domain': '2023', 'measure': 0.3},
-            ],
-          },
-        ],
-        domainLabelPaddingToAxisLine: 16,
-        axisLineTick: 2,
-        axisLinePointTick: 2,
-        axisLinePointWidth: 10,
-        axisLineColor: Colors.green,
-        measureLabelPaddingToAxisLine: 16,
-        barColor: (barData, index, id) => Colors.green,
-        showBarValue: true,
-      ),
+      child: Obx(() {
+        return DChartBar(
+          data: [
+            {
+              'id': 'Bar',
+              'data': List.generate(7, (index) {
+                return {
+                  'domain': cHome.weekText()[index],
+                  'measure': cHome.week[index],
+                };
+              })
+            },
+          ],
+          domainLabelPaddingToAxisLine: 8,
+          axisLineTick: 2,
+          axisLineColor: AppColor.primary,
+          measureLabelPaddingToAxisLine: 16,
+          barColor: (barData, index, id) => AppColor.primary,
+          showBarValue: true,
+        );
+      }),
     );
   }
 
