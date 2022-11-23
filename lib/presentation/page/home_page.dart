@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ListTile(
             onTap: () {
-              Get.to(() => const AddHistoryPage())?.then((value) {
+              Get.to(() => AddHistoryPage())?.then((value) {
                 if (value ?? false) {
                   cHome.getAnalysis(cUser.data.idUser!);
                 }
