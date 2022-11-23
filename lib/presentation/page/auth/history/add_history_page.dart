@@ -28,7 +28,9 @@ class AddHistoryPage extends StatelessWidget {
       cAddHistory.total.toString(),
     );
     if (success) {
-      Get.back(result: true);
+      Future.delayed(const Duration(milliseconds: 30000), () {
+        Get.back(result: true);
+      });
     }
   }
 
