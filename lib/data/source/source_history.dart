@@ -98,22 +98,22 @@ class SourceHistory {
   //   return responseBody['success'];
   // }
 
-  // static Future<List<History>> incomeOutcome(String idUser, String type) async {
-  //   String url = '${Api.history}/income_outcome.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_user': idUser,
-  //     'type': type,
-  //   });
+  static Future<List<History>> incomeOutcome(String idUser, String type) async {
+    String url = '${Api.history}/income_outcome.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'type': type,
+    });
 
-  //   if (responseBody == null) return [];
+    if (responseBody == null) return [];
 
-  //   if (responseBody['success']) {
-  //     List list = responseBody['data'];
-  //     return list.map((e) => History.fromJson(e)).toList();
-  //   }
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
 
-  //   return [];
-  // }
+    return [];
+  }
 
   // static Future<List<History>> incomeOutcomeSearch(
   //     String idUser, String type, String date) async {

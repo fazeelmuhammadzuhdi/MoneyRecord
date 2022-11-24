@@ -10,7 +10,7 @@ import 'package:money_record_app/config/app_color.dart';
 import 'package:money_record_app/config/app_format.dart';
 import 'package:money_record_app/data/source/source_history.dart';
 import 'package:money_record_app/presentation/controller/c_user.dart';
-import 'package:money_record_app/presentation/controller/history/c_history.dart';
+import 'package:money_record_app/presentation/controller/history/c_add_history.dart';
 
 class AddHistoryPage extends StatelessWidget {
   AddHistoryPage({super.key});
