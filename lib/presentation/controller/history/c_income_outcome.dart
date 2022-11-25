@@ -22,16 +22,16 @@ class CIncomeOutcome extends GetxController {
     });
   }
 
-  // search(idUser, type, date) async {
-  //   _loading.value = true;
-  //   update();
+  search(idUser, type, date) async {
+    _loading.value = true;
+    update();
 
-  //   _list.value = await SourceHistory.incomeOutcomeSearch(idUser, type, date);
-  //   update();
+    _list.value = await SourceHistory.incomeOutcomeSearch(idUser, type, date);
+    update();
 
-  //   Future.delayed(const Duration(milliseconds: 900), () {
-  //     _loading.value = false;
-  //     update();
-  //   });
-  // }
+    Future.delayed(const Duration(milliseconds: 900), () {
+      _loading.value = false;
+      update();
+    });
+  }
 }

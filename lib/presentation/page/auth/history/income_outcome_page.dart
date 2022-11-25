@@ -1,6 +1,7 @@
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:money_record_app/config/app_color.dart';
 import 'package:money_record_app/config/app_format.dart';
 import 'package:money_record_app/data/model/history.dart';
@@ -18,6 +19,7 @@ class IncomeOutcomePage extends StatefulWidget {
 class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
   final cInOut = Get.put(CIncomeOutcome());
   final cUser = Get.put(CUser());
+  final controllerSearch = TextEditingController();
 
   refresh() {
     cInOut.getList(cUser.data.idUser, widget.type);
@@ -42,7 +44,19 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
               height: 35,
               margin: EdgeInsets.all(16),
               child: TextField(
-                onTap: () {},
+                controller: controllerSearch,
+                onTap: () async {
+                  DateTime? result = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2022, 01, 01),
+                    lastDate: DateTime(DateTime.now().year + 1),
+                  );
+                  if (result != null) {
+                    controllerSearch.text =
+                        DateFormat('yyyy-MM-dd').format(result);
+                  }
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -51,7 +65,13 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                   filled: true,
                   fillColor: AppColor.chart.withOpacity(0.5),
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cInOut.search(
+                        cUser.data.idUser,
+                        widget.type,
+                        controllerSearch.text,
+                      );
+                    },
                     icon: const Icon(
                       Icons.search,
                       color: Colors.white,
@@ -61,7 +81,7 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                     vertical: 0,
                     horizontal: 16,
                   ),
-                  hintText: '2022-11-24',
+                  hintText: 'Search',
                   hintStyle: TextStyle(
                     color: Colors.white,
                   ),
