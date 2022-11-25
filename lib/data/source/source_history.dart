@@ -167,22 +167,22 @@ class SourceHistory {
   //   return [];
   // }
 
-  // static Future<History?> whereDate(String idUser, String date) async {
-  //   String url = '${Api.history}/where_date.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_user': idUser,
-  //     'date': date,
-  //   });
+  static Future<History?> whereDate(String idUser, String date) async {
+    String url = '${Api.history}/where_date.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'date': date,
+    });
 
-  //   if (responseBody == null) return null;
+    if (responseBody == null) return null;
 
-  //   if (responseBody['success']) {
-  //     var e = responseBody['data'];
-  //     return History.fromJson(e);
-  //   }
+    if (responseBody['success']) {
+      var e = responseBody['data'];
+      return History.fromJson(e);
+    }
 
-  //   return null;
-  // }
+    return null;
+  }
 
   // static Future<History?> detail(
   //     String idUser, String date, String type) async {
