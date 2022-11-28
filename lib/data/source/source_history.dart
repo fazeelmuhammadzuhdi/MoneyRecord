@@ -58,45 +58,45 @@ class SourceHistory {
     return responseBody['success'];
   }
 
-  // static Future<bool> update(String idHistory, String idUser, String date,
-  //     String type, String details, String total) async {
-  //   String url = '${Api.history}/update.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_history': idHistory,
-  //     'id_user': idUser,
-  //     'date': date,
-  //     'type': type,
-  //     'details': details,
-  //     'total': total,
-  //     'updated_at': DateTime.now().toIso8601String(),
-  //   });
+  static Future<bool> update(String idHistory, String idUser, String date,
+      String type, String details, String total) async {
+    String url = '${Api.history}/update.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_history': idHistory,
+      'id_user': idUser,
+      'date': date,
+      'type': type,
+      'details': details,
+      'total': total,
+      'updated_at': DateTime.now().toIso8601String(),
+    });
 
-  //   if (responseBody == null) return false;
+    if (responseBody == null) return false;
 
-  //   if (responseBody['success']) {
-  //     DInfo.dialogSuccess('Berhasil Update History');
-  //     DInfo.closeDialog();
-  //   } else {
-  //     if (responseBody['message'] == 'date') {
-  //       DInfo.dialogError('Tanggal History ada yang bentrok');
-  //     } else {
-  //       DInfo.dialogError('Gagal Tambah History');
-  //     }
-  //     DInfo.closeDialog();
-  //   }
+    if (responseBody['success']) {
+      DInfo.dialogSuccess('Berhasil Update History');
+      DInfo.closeDialog();
+    } else {
+      if (responseBody['message'] == 'date') {
+        DInfo.dialogError('Tanggal History ada yang bentrok');
+      } else {
+        DInfo.dialogError('Gagal Tambah History');
+      }
+      DInfo.closeDialog();
+    }
 
-  //   return responseBody['success'];
-  // }
+    return responseBody['success'];
+  }
 
-  // static Future<bool> delete(String idHistory) async {
-  //   String url = '${Api.history}/delete.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_history': idHistory,
-  //   });
+  static Future<bool> delete(String idHistory) async {
+    String url = '${Api.history}/delete.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_history': idHistory,
+    });
 
-  //   if (responseBody == null) return false;
-  //   return responseBody['success'];
-  // }
+    if (responseBody == null) return false;
+    return responseBody['success'];
+  }
 
   static Future<List<History>> incomeOutcome(String idUser, String type) async {
     String url = '${Api.history}/income_outcome.php';
@@ -134,38 +134,38 @@ class SourceHistory {
     return [];
   }
 
-  // static Future<List<History>> history(String idUser) async {
-  //   String url = '${Api.history}/history.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_user': idUser,
-  //   });
+  static Future<List<History>> history(String idUser) async {
+    String url = '${Api.history}/history.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+    });
 
-  //   if (responseBody == null) return [];
+    if (responseBody == null) return [];
 
-  //   if (responseBody['success']) {
-  //     List list = responseBody['data'];
-  //     return list.map((e) => History.fromJson(e)).toList();
-  //   }
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
 
-  //   return [];
-  // }
+    return [];
+  }
 
-  // static Future<List<History>> historySearch(String idUser, String date) async {
-  //   String url = '${Api.history}/history_search.php';
-  //   Map? responseBody = await AppRequest.post(url, {
-  //     'id_user': idUser,
-  //     'date': date,
-  //   });
+  static Future<List<History>> historySearch(String idUser, String date) async {
+    String url = '${Api.history}/history_search.php';
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'date': date,
+    });
 
-  //   if (responseBody == null) return [];
+    if (responseBody == null) return [];
 
-  //   if (responseBody['success']) {
-  //     List list = responseBody['data'];
-  //     return list.map((e) => History.fromJson(e)).toList();
-  //   }
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
 
-  //   return [];
-  // }
+    return [];
+  }
 
   static Future<History?> whereDate(String idUser, String date) async {
     String url = '${Api.history}/where_date.php';

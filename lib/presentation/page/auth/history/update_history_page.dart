@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
@@ -29,19 +31,19 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
   final controllerPrice = TextEditingController();
 
   updateHistory() async {
-    // bool success = await SourceHistory.update(
-    //   widget.idHistory,
-    //   cUser.data.idUser!,
-    //   cUpdateHistory.date,
-    //   cUpdateHistory.type,
-    //   jsonEncode(cUpdateHistory.items),
-    //   cUpdateHistory.total.toString(),
-    // );
-    // if (success) {
-    //   Future.delayed(const Duration(milliseconds: 3000), () {
-    //     Get.back(result: true);
-    //   });
-    // }
+    bool success = await SourceHistory.update(
+      widget.idHistory,
+      cUser.data.idUser!,
+      cUpdateHistory.date,
+      cUpdateHistory.type,
+      jsonEncode(cUpdateHistory.items),
+      cUpdateHistory.total.toString(),
+    );
+    if (success) {
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        Get.back(result: true);
+      });
+    }
   }
 
   @override

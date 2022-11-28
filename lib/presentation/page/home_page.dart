@@ -9,6 +9,7 @@ import 'package:money_record_app/config/session.dart';
 import 'package:money_record_app/presentation/controller/c_home.dart';
 import 'package:money_record_app/presentation/controller/c_user.dart';
 import 'package:money_record_app/presentation/page/auth/history/add_history_page.dart';
+import 'package:money_record_app/presentation/page/auth/history/history_page.dart';
 import 'package:money_record_app/presentation/page/auth/history/income_outcome_page.dart';
 import 'package:money_record_app/presentation/page/auth/login_page.dart';
 
@@ -253,7 +254,9 @@ class _HomePageState extends State<HomePage> {
           ),
           const Divider(height: 1),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const HistoryPage());
+            },
             leading: const Icon(
               Icons.history,
               color: Colors.lightGreen,
